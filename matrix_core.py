@@ -17,5 +17,5 @@ def transp(A):
     return A.T
     
 def deg(A, b):
-    return A ** b
+    return numpy.linalg.matrix_power(A, b)
     
