@@ -106,7 +106,7 @@ async def second_input(message: Message, state: FSMContext):
             else:
                 result = matrix_core.multi(matrix1, matrix2)
         elif operation == "power":
-            n = int(message.text)
+            n = int(message.text.strip())
             result = matrix_core.deg(matrix1, n)
 
         await message.answer(f"Результат:\n{np.array2string(result, precision=2)}")
