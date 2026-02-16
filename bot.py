@@ -91,7 +91,7 @@ async def first_input(message: Message, state: FSMContext):
             if operation in ["add", "mul"]:
                 await message.answer("Введите вторую матрицу:")
             elif operation == "power":
-                await message.answer("Введите степень (целое число):")
+                await message.answer("Введите степень:")
             await state.set_state(MatrixStates.waiting_second_input)
 
     except ValueError:
