@@ -16,6 +16,8 @@ def det(A):
 def transp(A):
     return A.T
     
-def deg(A, n):
-    return numpy.linalg.matrix_power(A, n)
+def deg(matrix, n):
+    if matrix.shape[0] != matrix.shape[1]:
+        raise ValueError("Матрица должна быть квадратной")
+    return np.linalg.matrix_power(matrix, n)
     
