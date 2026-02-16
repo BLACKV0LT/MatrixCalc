@@ -15,9 +15,15 @@ TOKEN = os.getenv("BOT_TOKEN")
 bot = Bot(token=TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
 
+# ------------------ УДАЛЕНИЕ СТАРОГО WEBHOOK ------------------
 async def remove_webhook():
-    await bot.delete_webhook()
-    await bot.session.close()
+    info = await bot.get_webhook_info()
+    if info.url:
+        print(f"Старый webhook найден: {info.url}, удаляем...")
+        await bot.delete_webhook()
+        print("Webhook удалён")
+    else:
+        print("Webhook не установлен, можно запускать polling")
 
 # ------------------ FSM STATES ------------------
 class MatrixStates(StatesGroup):
