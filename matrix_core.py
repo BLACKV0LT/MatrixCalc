@@ -7,7 +7,7 @@ def subt(A, B):
     return A - B
 
 def multi(A, B):
-    return A * B
+    return A @ B
     
 def det(A):
     return np.linalg.det(A)
