@@ -129,6 +129,7 @@ async def second_input(message: Message, state: FSMContext):
 
 # ------------------ RUN BOT ------------------
 async def main():
+    await remove_webhook()
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
