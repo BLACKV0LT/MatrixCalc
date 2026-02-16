@@ -15,6 +15,10 @@ TOKEN = os.getenv("BOT_TOKEN")
 bot = Bot(token=TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
 
+async def remove_webhook():
+    await bot.delete_webhook()
+    await bot.session.close()
+
 # ------------------ FSM STATES ------------------
 class MatrixStates(StatesGroup):
     waiting_first_input = State()   # первая матрица
