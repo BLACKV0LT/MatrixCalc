@@ -1,34 +1,30 @@
 import asyncio
 import os
 import numpy as np
-
 from aiogram import Bot, Dispatcher, F
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.memory import MemoryStorage
+import matrix_core
 
-import matrix_core  # твои функции: summa, multi, det, transp, deg
-
-# ------------------ BOT SETUP ------------------
 TOKEN = os.getenv("BOT_TOKEN")
-bot = Bot(token=TOKEN)
+bot = Bot(token=TOKEN)  # создаём один объект Bot
 dp = Dispatcher(storage=MemoryStorage())
 
-# ------------------ УДАЛЕНИЕ СТАРОГО WEBHOOK ------------------
+# ---------------- FSM STATES ----------------
+class MatrixStates(StatesGroup):
+    waiting_first_input = State()
+    waiting_second_input = State()
+
+# ---------------- Функция удаления webhook ----------------
 async def remove_webhook():
     info = await bot.get_webhook_info()
     if info.url:
-        print(f"Старый webhook найден: {info.url}, удаляем...")
-        await bot.delete_webhook()
+        await bot.delete_webhook(drop_pending_updates=True)  # удаляем старый webhook
         print("Webhook удалён")
     else:
         print("Webhook не установлен, можно запускать polling")
-
-# ------------------ FSM STATES ------------------
-class MatrixStates(StatesGroup):
-    waiting_first_input = State()   # первая матрица
-    waiting_second_input = State()  # вторая матрица или степень
 
 # ------------------ KEYBOARD ------------------
 def get_keyboard():
